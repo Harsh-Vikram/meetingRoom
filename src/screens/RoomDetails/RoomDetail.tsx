@@ -56,7 +56,10 @@ const RoomDetail = (props: Props) => {
 export default RoomDetail;
 
 const styles = StyleSheet.create({
-  mainContainer: {flex: 1},
+  mainContainer: {
+    flex: 1,
+    backgroundColor: colors.PRIMARY_BG,
+  },
   heading: {
     fontSize: normalize(22),
     color: colors.PRIMARY_TEXT,
@@ -64,6 +67,6 @@ const styles = StyleSheet.create({
     letterSpacing: vw(1),
   },
   flatListStyle: {
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.PRIMARY_BG,
   },
 });

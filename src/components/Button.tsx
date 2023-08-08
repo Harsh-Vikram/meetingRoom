@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: vw(24),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.PRIMARY_BG,
+    backgroundColor: colors.SECONDARY_BG,
   },
   titleText: {
     fontSize: normalize(16),
     letterSpacing: 1,
-    color: colors.PRIMARY_TEXT,
+    color: colors.SECONDARY_TEXT,
   },
 });

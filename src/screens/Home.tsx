@@ -1,5 +1,5 @@
 //Library imports
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 //Component imports
@@ -10,6 +10,8 @@ import {IMAGES} from '../utils/images';
 import screenNames from '../utils/screenNames';
 import {getRooms} from '../utils/FirebaseAPICalls';
 import {RoomDetailType} from '../utils/types';
+import colors from '../utils/colors';
+import {vh, vw} from '../utils/Dimension';
 
 type Props = {};
 
@@ -40,25 +42,29 @@ const Home = (props: Props) => {
   );
 
   return (
-    <View style={{flex: 1, paddingVertical: 30}}>
-      <View style={styles.card}>
-        <FlatList
-          columnWrapperStyle={{justifyContent: 'space-around'}}
-          data={data}
-          renderItem={renderItem}
-          numColumns={2}
-          ItemSeparatorComponent={() => (
-            <View style={{width: 400, height: 50}} />
-          )}
-        />
-      </View>
-    </View>
+    <SafeAreaView style={styles.mainContainer}>
+      <FlatList
+        columnWrapperStyle={{justifyContent: 'space-between'}}
+        data={data}
+        renderItem={renderItem}
+        numColumns={2}
+        style={styles.flatListStyle}
+      />
+    </SafeAreaView>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: colors.PRIMARY_BG,
+  },
+  flatListStyle: {
+    paddingHorizontal: vw(20),
+    marginTop: vh(30),
+  },
   card: {
     height: '100%',
   },
