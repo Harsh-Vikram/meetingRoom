@@ -24,7 +24,6 @@ const Router = () => {
           name={screenNames.HOME}
           component={Home}
           options={({navigation}) => ({
-            // headerLeft: () => <BackButton navigation={navigation} />,
             headerTitleAlign: 'center',
             headerShadowVisible: false,
             headerStyle: styles.headerStyle,
