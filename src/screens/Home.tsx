@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore';
 import RoomCard from '../components/RoomCard';
 import { IMAGES } from '../utils/images';
+import { dummyRoomDetail } from '../utils/constants';
 
 type Props = {}
 
@@ -11,43 +12,44 @@ const Home = (props: Props) => {
   useEffect(() => {
     const readData = async () => {
       try {
-        const users = await firestore().collection('Rooms').get();
+        const users = await firestore().collection('Rooms') .orderBy('roomNumber', 'asc').get();
         users && setData(users?.docs)
         console.log('user', users?.docs)
       }
       catch (error) {
         console.log('error', error)
       }
-
+      
     }
     readData()
   }, [])
 
+// console.log('data',data);
 
   const onPressCard = () => {
   }
-  const renderItem = (data: any) => {
+  const renderItem = ({item}) => {
+    console.log('data',item);
+
     return (
       <View>
         <RoomCard
         imageName={IMAGES.ROOM_IMAGE}
         roomTitle='Room Number' 
-        roomNumber='101'
+        roomNumber={item?._data?.roomNumber}
         onPress={onPressCard}/>
       </View>
     )
   }
 
   return (
-    <View style={{flex:1}}>
-        <Text>Home</Text>
+    <View style={{flex:1,paddingVertical:30}}>
         <View style={styles.card}>
           <FlatList
            columnWrapperStyle={{justifyContent:'space-around'}}
-            data={['','','','','','','']}
+            data={data}
             renderItem={renderItem}
             numColumns={2}
-            contentContainerStyle={{alignItems:'center'}}
             ItemSeparatorComponent={
               () => <View style={{ width: 400, height:50, }}/>
           }
