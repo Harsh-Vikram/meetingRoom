@@ -3,6 +3,11 @@ export type SlotDataType = {
   startTime: string;
   endTime: string;
   isOccupied: boolean;
+  occupiedBy?: {
+    userId: string;
+    firstName: string;
+    lastName: string;
+  };
 };
 
 export type RoomDetailType = {

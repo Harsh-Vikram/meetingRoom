@@ -27,19 +27,29 @@ const SlotCard = (props: Props) => {
         },
       ]}
       onPress={props?.data?.isOccupied ? null : onSlotPress}>
-      <View
-        style={[
-          styles.dot,
-          {
-            backgroundColor: props?.data?.isOccupied
-              ? colors.RED
-              : colors.GREEN,
-          },
-        ]}
-      />
-      <Text style={styles.timingText}>
-        {props?.data?.startTime} - {props?.data?.endTime}
-      </Text>
+      <View style={styles.columnOne}>
+        <View style={styles.row1}>
+          <View
+            style={[
+              styles.dot,
+              {
+                backgroundColor: props?.data?.isOccupied
+                  ? colors.RED
+                  : colors.GREEN,
+              },
+            ]}
+          />
+          <Text style={styles.timingText}>
+            {props?.data?.startTime} - {props?.data?.endTime}
+          </Text>
+        </View>
+        {props?.data?.isOccupied && (
+          <Text style={styles.occupiedText}>
+            Occupied By: {props?.data?.occupiedBy?.firstName}{' '}
+            {props?.data?.occupiedBy?.lastName}
+          </Text>
+        )}
+      </View>
       {props?.selectedSlot ===
         `${props.data?.startTime}-${props.data?.endTime}` && (
         <Image source={IMAGES.CHECK_MARK} style={styles.checkMark} />
@@ -56,10 +66,18 @@ const styles = StyleSheet.create({
     paddingVertical: vh(20),
     paddingHorizontal: vw(16),
     marginVertical: vh(6),
+    flexDirection: 'row',
+
     marginHorizontal: vw(20),
+    height: vh(80),
+  },
+  columnOne: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  row1: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: vh(80),
   },
   dot: {
     height: vh(16),
@@ -72,6 +90,12 @@ const styles = StyleSheet.create({
     color: colors.PRIMARY_TEXT,
     letterSpacing: 0.7,
     flex: 1,
+  },
+  occupiedText: {
+    marginTop: vh(4),
+    fontSize: normalize(12),
+    color: colors.PRIMARY_TEXT,
+    letterSpacing: 0.7,
   },
   checkMark: {
     height: vh(26),

@@ -18,6 +18,11 @@ export const dummyRoomDetail = {
       startTime: '9:00',
       endTime: '10:00',
       isOccupied: true,
+      occupiedBy: {
+        userId: 'string',
+        firstName: 'Aman',
+        lastName: 'Shukla',
+      },
     },
     {
       startTime: '10:00',
@@ -33,6 +38,11 @@ export const dummyRoomDetail = {
       startTime: '12:00',
       endTime: '13:00',
       isOccupied: true,
+      occupiedBy: {
+        userId: 'string',
+        firstName: 'Harsh',
+        lastName: 'Vikram',
+      },
     },
     {
       startTime: '13:00',
@@ -53,6 +63,11 @@ export const dummyRoomDetail = {
       startTime: '16:00',
       endTime: '17:00',
       isOccupied: true,
+      occupiedBy: {
+        userId: 'string',
+        firstName: 'Sehnawaz',
+        lastName: 'Khan',
+      },
     },
     {
       startTime: '17:00',
