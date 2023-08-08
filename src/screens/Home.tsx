@@ -1,17 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import screenNames from '../utils/screenNames'
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import screenNames from '../utils/screenNames';
 
-type Props = {}
+type Props = {};
 
 const Home = (props: Props) => {
-  return (
-    <View>
-      <Text onPress={() => props.navigation.navigate(screenNames.ROOM_DETAIL)}>Home</Text>
-    </View>
-  )
-}
+  return <View></View>;
+};
 
-export default Home
+export default Home;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
