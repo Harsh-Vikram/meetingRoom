@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import screenNames from '../utils/screenNames'
 
 type Props = {}
 
 const Home = (props: Props) => {
   return (
     <View>
-      <Text>Home</Text>
+      <Text onPress={() => props.navigation.navigate(screenNames.ROOM_DETAIL)}>Home</Text>
     </View>
   )
 }
