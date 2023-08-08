@@ -4,6 +4,7 @@ import firestore from '@react-native-firebase/firestore';
 import RoomCard from '../components/RoomCard';
 import { IMAGES } from '../utils/images';
 import { dummyRoomDetail } from '../utils/constants';
+import screenNames from '../utils/screenNames';
 
 type Props = {};
 
@@ -27,18 +28,18 @@ const Home = (props: Props) => {
 // console.log('data',data);
 
   const onPressCard = () => {
+    console.log('data');
+    props.navigation.navigate(screenNames.ROOM_DETAIL)
   }
   const renderItem = ({item}) => {
-    console.log('data',item);
 
     return (
-      <View>
+    
         <RoomCard
         imageName={IMAGES.ROOM_IMAGE}
         roomTitle='Room Number' 
         roomNumber={item?._data?.roomNumber}
         onPress={onPressCard}/>
-      </View>
     );
   };
 
