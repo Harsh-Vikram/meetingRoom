@@ -14,6 +14,7 @@ import BackButton from '../components/BackButton';
 import colors from '../utils/colors';
 import screenNames from '../utils/screenNames';
 import {normalize, vw} from '../utils/Dimension';
+import RoomDetail from '../screens/RoomDetails/RoomDetail';
 
 const Stack = createStackNavigator();
 const Router = () => {
@@ -27,7 +28,19 @@ const Router = () => {
             headerTitleAlign: 'center',
             headerShadowVisible: false,
             headerStyle: styles.headerStyle,
-            headerTitle: () => <Text style={styles.heading}>Book Your Meeting</Text>,
+            headerTitle: () => (
+              <Text style={styles.heading}>Book Your Meeting</Text>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name={screenNames.ROOM_DETAIL}
+          component={RoomDetail}
+          options={({navigation}) => ({
+            headerLeft: () => <BackButton navigation={navigation} />,
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerStyle: styles.headerStyle,
           })}
         />
       </Stack.Navigator>

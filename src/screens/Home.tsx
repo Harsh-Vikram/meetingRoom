@@ -1,14 +1,14 @@
-import { Alert, FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import {Alert, FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import RoomCard from '../components/RoomCard';
 import { IMAGES } from '../utils/images';
 import { dummyRoomDetail } from '../utils/constants';
 
-type Props = {}
+type Props = {};
 
 const Home = (props: Props) => {
-  const [data, setData] = useState()
+  const [data, setData] = useState();
   useEffect(() => {
     const readData = async () => {
       try {
@@ -39,8 +39,8 @@ const Home = (props: Props) => {
         roomNumber={item?._data?.roomNumber}
         onPress={onPressCard}/>
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <View style={{flex:1,paddingVertical:30}}>
@@ -56,13 +56,13 @@ const Home = (props: Props) => {
           />
         </View>
     </View>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
 
 const styles = StyleSheet.create({
   card: {
-   height:'100%'
-  }
-})
+    height: '100%',
+  },
+});

@@ -1,4 +1,4 @@
 export default {
-HOME: 'home screen',
-
+  HOME: 'Home',
+  ROOM_DETAIL: 'RoomDetail',
 };
