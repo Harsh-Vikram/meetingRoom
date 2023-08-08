@@ -45,8 +45,8 @@ const SlotCard = (props: Props) => {
         </View>
         {props?.data?.isOccupied && (
           <Text style={styles.occupiedText}>
-            Occupied By: {props?.data?.occupiedBy?.firstName}{' '}
-            {props?.data?.occupiedBy?.lastName}
+            Occupied By: {'props?.data?.occupiedBy?.firstName'}{' '}
+            {'props?.data?.occupiedBy?.lastName'}
           </Text>
         )}
       </View>

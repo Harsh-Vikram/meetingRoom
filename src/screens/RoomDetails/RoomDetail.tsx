@@ -9,20 +9,19 @@ import Button from '../../components/Button';
 //Util imports
 import colors from '../../utils/colors';
 import {normalize, vh, vw} from '../../utils/Dimension';
-import {dummyRoomDetail} from '../../utils/constants';
 import {SlotDataType} from '../../utils/types';
 
 type Props = {};
 
 const RoomDetail = (props: Props) => {
   const [selectedSlot, setSelectedSlot] = useState<string>('');
+  const {roomNumber, roomId, slots} = props.route.params;
+  console.log(props.route.params);
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerTitle: () => (
-        <Text style={styles.heading}>
-          Room Number {dummyRoomDetail.roomNumber}
-        </Text>
+        <Text style={styles.heading}>Room Number {roomNumber}</Text>
       ),
     });
   });
@@ -40,7 +39,7 @@ const RoomDetail = (props: Props) => {
   return (
     <View style={styles.mainContainer}>
       <FlatList
-        data={dummyRoomDetail.slots}
+        data={slots}
         renderItem={renderItems}
         style={styles.flatListStyle}
         showsVerticalScrollIndicator={false}

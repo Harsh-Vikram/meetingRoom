@@ -1,10 +1,15 @@
-import {Alert, FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+//Library imports
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import firestore from '@react-native-firebase/firestore';
+
+//Component imports
 import RoomCard from '../components/RoomCard';
-import { IMAGES } from '../utils/images';
-import { dummyRoomDetail } from '../utils/constants';
+
+//Util imports
+import {IMAGES} from '../utils/images';
 import screenNames from '../utils/screenNames';
+import {getRooms} from '../utils/FirebaseAPICalls';
+import {RoomDetailType} from '../utils/types';
 
 type Props = {};
 
@@ -12,50 +17,41 @@ const Home = (props: Props) => {
   const [data, setData] = useState();
   useEffect(() => {
     const readData = async () => {
-      try {
-        const users = await firestore().collection('Rooms') .orderBy('roomNumber', 'asc').get();
-        users && setData(users?.docs)
-        console.log('user', users?.docs)
-      }
-      catch (error) {
-        console.log('error', error)
-      }
-      
-    }
-    readData()
-  }, [])
+      const userData = await getRooms();
+      if (userData) setData(userData?.map(item => item._data));
+    };
+    readData();
+  }, []);
 
-// console.log('data',data);
-
-  const onPressCard = () => {
-    console.log('data');
-    props.navigation.navigate(screenNames.ROOM_DETAIL)
-  }
-  const renderItem = ({item}) => {
-
-    return (
-    
-        <RoomCard
-        imageName={IMAGES.ROOM_IMAGE}
-        roomTitle='Room Number' 
-        roomNumber={item?._data?.roomNumber}
-        onPress={onPressCard}/>
-    );
+  const onPressCard = (roomDetails: RoomDetailType) => {
+    props.navigation.navigate(screenNames.ROOM_DETAIL, roomDetails);
   };
 
+  console.log(data);
+
+  const renderItem = ({item}: {item: RoomDetailType}) => (
+    <RoomCard
+      imageName={IMAGES.ROOM_IMAGE}
+      roomTitle="Room Number"
+      roomNumber={item?.roomNumber}
+      data={item}
+      onPress={onPressCard}
+    />
+  );
+
   return (
-    <View style={{flex:1,paddingVertical:30}}>
-        <View style={styles.card}>
-          <FlatList
-           columnWrapperStyle={{justifyContent:'space-around'}}
-            data={data}
-            renderItem={renderItem}
-            numColumns={2}
-            ItemSeparatorComponent={
-              () => <View style={{ width: 400, height:50, }}/>
-          }
-          />
-        </View>
+    <View style={{flex: 1, paddingVertical: 30}}>
+      <View style={styles.card}>
+        <FlatList
+          columnWrapperStyle={{justifyContent: 'space-around'}}
+          data={data}
+          renderItem={renderItem}
+          numColumns={2}
+          ItemSeparatorComponent={() => (
+            <View style={{width: 400, height: 50}} />
+          )}
+        />
+      </View>
     </View>
   );
 };

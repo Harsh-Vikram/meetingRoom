@@ -6,5 +6,5 @@ export default {
   RED: '#DB0F27',
   GREEN: '#2AD731',
   PRIMARY_BG: '#8DD91D',
-  PRIMARY_TEXT: '#042325',
+  PRIMARY_TEXT: '#092350',
 };
