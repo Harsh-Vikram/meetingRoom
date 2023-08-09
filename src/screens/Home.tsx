@@ -1,8 +1,17 @@
-import {Alert, FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+//Library imports
+import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import firestore from '@react-native-firebase/firestore';
+
+//Component imports
 import RoomCard from '../components/RoomCard';
+
+//Util imports
 import {IMAGES} from '../utils/images';
+import screenNames from '../utils/screenNames';
+import {getRooms} from '../utils/FirebaseAPICalls';
+import {RoomDetailType} from '../utils/types';
+import colors from '../utils/colors';
+import {vh, vw} from '../utils/Dimension';
 
 type Props = {};
 
@@ -10,53 +19,52 @@ const Home = (props: Props) => {
   const [data, setData] = useState();
   useEffect(() => {
     const readData = async () => {
-      try {
-        const users = await firestore().collection('Rooms').get();
-        users && setData(users?.docs);
-        console.log('user', users?.docs);
-      } catch (error) {
-        console.log('error', error);
-      }
+      const userData = await getRooms();
+      if (userData) setData(userData?.map(item => item._data));
     };
     readData();
   }, []);
 
-  const onPressCard = () => {};
-  const renderItem = (data: any) => {
-    return (
-      <View>
-        <RoomCard
-          imageName={IMAGES.ROOM_IMAGE}
-          roomTitle="Room Number"
-          roomNumber="101"
-          onPress={onPressCard}
-        />
-      </View>
-    );
+  const onPressCard = (roomDetails: RoomDetailType) => {
+    props.navigation.navigate(screenNames.ROOM_DETAIL, roomDetails);
   };
 
+  console.log(data);
+
+  const renderItem = ({item}: {item: RoomDetailType}) => (
+    <RoomCard
+      imageName={IMAGES.ROOM_IMAGE}
+      roomTitle="Room Number"
+      roomNumber={item?.roomNumber}
+      data={item}
+      onPress={onPressCard}
+    />
+  );
+
   return (
-    <View style={{flex: 1}}>
-      <Text>Home</Text>
-      <View style={styles.card}>
-        <FlatList
-          columnWrapperStyle={{justifyContent: 'space-around'}}
-          data={['', '', '', '', '', '', '']}
-          renderItem={renderItem}
-          numColumns={2}
-          contentContainerStyle={{alignItems: 'center'}}
-          ItemSeparatorComponent={() => (
-            <View style={{width: 400, height: 50}} />
-          )}
-        />
-      </View>
-    </View>
+    <SafeAreaView style={styles.mainContainer}>
+      <FlatList
+        columnWrapperStyle={{justifyContent: 'space-between'}}
+        data={data}
+        renderItem={renderItem}
+        numColumns={2}
+        style={styles.flatListStyle}
+      />
+    </SafeAreaView>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: colors.PRIMARY_BG,
+  },
+  flatListStyle: {
+    paddingHorizontal: vw(20),
+    marginTop: vh(30),
+  },
   card: {
     height: '100%',
   },

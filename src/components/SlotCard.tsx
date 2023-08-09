@@ -45,8 +45,8 @@ const SlotCard = (props: Props) => {
         </View>
         {props?.data?.isOccupied && (
           <Text style={styles.occupiedText}>
-            Occupied By: {props?.data?.occupiedBy?.firstName}{' '}
-            {props?.data?.occupiedBy?.lastName}
+            Occupied By: {'props?.data?.occupiedBy?.firstName'}{' '}
+            {'props?.data?.occupiedBy?.lastName'}
           </Text>
         )}
       </View>
@@ -62,14 +62,16 @@ export default SlotCard;
 
 const styles = StyleSheet.create({
   eachTimeSlots: {
-    backgroundColor: colors.GREY,
-    paddingVertical: vh(20),
-    paddingHorizontal: vw(16),
+    backgroundColor: colors.PRIMARY_FOREGROUND,
+    borderRadius: vw(8),
+    padding: vw(10),
+    borderWidth: vw(2),
+    borderColor: colors.WHITE,
     marginVertical: vh(6),
     flexDirection: 'row',
 
     marginHorizontal: vw(20),
-    height: vh(80),
+    height: vh(60),
   },
   columnOne: {
     flex: 1,

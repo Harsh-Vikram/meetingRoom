@@ -58,11 +58,11 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: normalize(22),
-    color: colors.BLACK,
+    color: colors.PRIMARY_TEXT,
     fontWeight: 'bold',
     letterSpacing: vw(1),
   },
   headerStyle: {
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.PRIMARY_BG,
   },
 });
