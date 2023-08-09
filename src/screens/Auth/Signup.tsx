@@ -94,6 +94,7 @@ const Signup = (props: Props) => {
           onPress={onPressRegister}
           containerStyle={styles.btnStyles}
           isLoading={isLoading}
+          isDisabled={!(email && password && confirmPassword)}
         />
         <Text style={styles.alreadyHaveText}>
           Already have a account?{' '}
