@@ -43,7 +43,7 @@ const Signup = (props: Props) => {
         .then(res => {
           setIsLoading(false);
           console.log('User account created & signed in!', res);
-          props.navigation.navigate(screenNames.LOGIN);
+          props.navigation.navigate(screenNames.FULL_NAME);
         })
         .catch(error => {
           setIsLoading(false);

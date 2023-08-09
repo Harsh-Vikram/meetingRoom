@@ -36,9 +36,9 @@ const Login = (props: Props) => {
       .then(res => {
         setIsLoading(false);
         console.log('User signed in!', res);
-        props.navigation.navigate(screenNames.HOME);
         if (!res.user.displayName)
           props.navigation.navigate(screenNames.FULL_NAME);
+        else props.navigation.navigate(screenNames.HOME);
       })
       .catch(error => {
         setIsLoading(false);

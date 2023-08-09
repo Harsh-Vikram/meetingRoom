@@ -59,7 +59,6 @@ const Router = () => {
           name={screenNames.FULL_NAME}
           component={FullName}
           options={{
-            presentation: 'transparentModal',
             headerShown: false,
           }}
         />
