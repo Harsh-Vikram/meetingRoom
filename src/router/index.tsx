@@ -1,8 +1,9 @@
 //Library imports
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import auth from '@react-native-firebase/auth';
 
 //Screen imports
 import Home from '../screens/Home';
@@ -15,12 +16,53 @@ import colors from '../utils/colors';
 import screenNames from '../utils/screenNames';
 import {normalize, vw} from '../utils/Dimension';
 import RoomDetail from '../screens/RoomDetails/RoomDetail';
+import Signup from '../screens/Auth/Signup';
+import Login from '../screens/Auth/Login';
+import FullName from '../screens/Auth/FullName';
 
 const Stack = createStackNavigator();
 const Router = () => {
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+  console.log('user', user);
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+  if (initializing) return null;
+  // initialRouteName={user ? screenNames.HOME : screenNames.SIGNUP}
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name={screenNames.SIGNUP}
+          component={Signup}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={screenNames.LOGIN}
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name={screenNames.FULL_NAME}
+          component={FullName}
+          options={{
+            presentation: 'transparentModal',
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name={screenNames.HOME}
           component={Home}
