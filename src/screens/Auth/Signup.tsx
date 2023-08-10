@@ -1,17 +1,22 @@
+//Library imports
 import {Alert, Image, StatusBar, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
-import colors from '../../utils/colors';
+
+//Component imports
+import InputWithLabel from '../../components/InputWithLabel';
+import Button from '../../components/Button';
+
+//Util imports
 import {
+  vh,
+  vw,
   normalize,
   screenHeight,
   screenWidth,
-  vh,
-  vw,
 } from '../../utils/Dimension';
-import InputWithLabel from '../../components/InputWithLabel';
+import colors from '../../utils/colors';
 import {IMAGES} from '../../utils/images';
-import Button from '../../components/Button';
 import screenNames from '../../utils/screenNames';
 
 type Props = {};
@@ -124,7 +129,7 @@ const styles = StyleSheet.create({
     color: colors.GREY,
   },
   upperContainer: {
-    flex: 0.4,
+    flex: 0.65,
     margin: vw(24),
   },
   upperImage: {

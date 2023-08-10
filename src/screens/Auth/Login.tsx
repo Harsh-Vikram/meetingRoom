@@ -1,17 +1,21 @@
+//Library imports
 import {Alert, Image, StatusBar, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
-import colors from '../../utils/colors';
+
+//Component imports
+import Button from '../../components/Button';
+import InputWithLabel from '../../components/InputWithLabel';
+//Util imports
 import {
+  vh,
+  vw,
   normalize,
   screenHeight,
   screenWidth,
-  vh,
-  vw,
 } from '../../utils/Dimension';
-import InputWithLabel from '../../components/InputWithLabel';
+import colors from '../../utils/colors';
 import {IMAGES} from '../../utils/images';
-import Button from '../../components/Button';
 import screenNames from '../../utils/screenNames';
 
 type Props = {};
@@ -52,6 +56,11 @@ const Login = (props: Props) => {
         console.error(error);
       });
   };
+
+  const onPressSignup = () => {
+    props.navigation.navigate(screenNames.SIGNUP);
+  };
+
   return (
     <View style={styles.mainContainer}>
       <StatusBar backgroundColor={colors.PRIMARY_BG} />
@@ -81,6 +90,12 @@ const Login = (props: Props) => {
           isLoading={isLoading}
           isDisabled={!(email && password)}
         />
+        <Text style={styles.alreadyHaveText}>
+          Don't have an account?{' '}
+          <Text onPress={onPressSignup} style={styles.loginText}>
+            Create one.
+          </Text>
+        </Text>
       </View>
     </View>
   );
@@ -103,7 +118,7 @@ const styles = StyleSheet.create({
     color: colors.GREY,
   },
   upperContainer: {
-    flex: 0.6,
+    flex: 0.8,
     margin: vw(24),
     paddingTop: vh(20),
   },
@@ -125,6 +140,16 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   btnStyles: {
-    marginTop: vh(20),
+    marginTop: vh(40),
+  },
+  alreadyHaveText: {
+    fontSize: normalize(12),
+    color: colors.GREY,
+    alignSelf: 'center',
+    marginTop: vh(12),
+  },
+  loginText: {
+    color: colors.BLUE,
+    textDecorationLine: 'underline',
   },
 });
