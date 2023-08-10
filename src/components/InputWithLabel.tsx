@@ -1,7 +1,6 @@
 //Library imports
 import {
   View,
-  Text,
   Image,
   Pressable,
   StyleSheet,

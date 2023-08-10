@@ -1,24 +1,27 @@
 //Library imports
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {Image, Pressable, StyleSheet, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
 
 //Screen imports
 import Home from '../screens/Home';
+import Login from '../screens/Auth/Login';
+import Signup from '../screens/Auth/Signup';
+import FullName from '../screens/Auth/FullName';
+import LandingPage from '../screens/LandingPage/LandingPage';
+import RoomDetail from '../screens/RoomDetails/RoomDetail';
+import ProfileDetail from '../screens/ProfileDetail/ProfileDetail';
 
 //Component imports
 import BackButton from '../components/BackButton';
 
 //Util imports
 import colors from '../utils/colors';
+import {IMAGES} from '../utils/images';
 import screenNames from '../utils/screenNames';
-import {normalize, vw} from '../utils/Dimension';
-import RoomDetail from '../screens/RoomDetails/RoomDetail';
-import Signup from '../screens/Auth/Signup';
-import Login from '../screens/Auth/Login';
-import FullName from '../screens/Auth/FullName';
+import {normalize, vh, vw} from '../utils/Dimension';
 
 const Stack = createStackNavigator();
 const Router = () => {
@@ -41,6 +44,14 @@ const Router = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name={screenNames.LANDING_PAGE}
+          component={LandingPage}
+          options={{
+            headerShown: false,
+          }}
+        />
+
         <Stack.Screen
           name={screenNames.SIGNUP}
           component={Signup}
@@ -72,12 +83,29 @@ const Router = () => {
             headerTitle: () => (
               <Text style={styles.heading}>Book Your Meeting</Text>
             ),
+            headerRight: () => (
+              <Pressable
+                onPress={() => navigation.navigate(screenNames.PROFILE_DETAIL)}>
+                <Image source={IMAGES.PROFILE_IMAGE} style={styles.icon} />
+              </Pressable>
+            ),
           })}
         />
         <Stack.Screen
           name={screenNames.ROOM_DETAIL}
           component={RoomDetail}
           options={({navigation}) => ({
+            headerLeft: () => <BackButton navigation={navigation} />,
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerStyle: styles.headerStyle,
+          })}
+        />
+        <Stack.Screen
+          name={screenNames.PROFILE_DETAIL}
+          component={ProfileDetail}
+          options={({navigation}) => ({
+            headerTitle: () => <Text style={styles.heading}>Profile</Text>,
             headerLeft: () => <BackButton navigation={navigation} />,
             headerTitleAlign: 'center',
             headerShadowVisible: false,
@@ -105,5 +133,11 @@ const styles = StyleSheet.create({
   },
   headerStyle: {
     backgroundColor: colors.PRIMARY_BG,
+  },
+  icon: {
+    height: vh(30),
+    width: vw(30),
+    marginRight: 20,
+    resizeMode: 'contain',
   },
 });
