@@ -1,6 +1,6 @@
 //Library imports
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {Image, Pressable, StyleSheet, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -13,14 +13,25 @@ import BackButton from '../components/BackButton';
 //Util imports
 import colors from '../utils/colors';
 import screenNames from '../utils/screenNames';
-import {normalize, vw} from '../utils/Dimension';
+import {normalize, vh, vw} from '../utils/Dimension';
 import RoomDetail from '../screens/RoomDetails/RoomDetail';
+import LandingPage from '../screens/LandingPage/LandingPage';
+import { IMAGES } from '../utils/images';
+import ProfileDetail from '../screens/ProfileDetail/ProfileDetail';
 
 const Stack = createStackNavigator();
 const Router = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+        <Stack.Navigator>
+        <Stack.Screen
+          name={screenNames.LANDING_PAGE}
+          component={LandingPage}
+          options={{
+            headerShown: false
+          }}
+        />
+    
         <Stack.Screen
           name={screenNames.HOME}
           component={Home}
@@ -31,6 +42,9 @@ const Router = () => {
             headerTitle: () => (
               <Text style={styles.heading}>Book Your Meeting</Text>
             ),
+            headerRight: () => <Pressable onPress={()=>(navigation.navigate(screenNames.PROFILE_DETAIL))}>
+              <Image source={IMAGES.PROFILE_IMAGE} style={styles.icon}/>
+            </Pressable>
           })}
         />
         <Stack.Screen
@@ -42,6 +56,20 @@ const Router = () => {
             headerShadowVisible: false,
             headerStyle: styles.headerStyle,
           })}
+        />
+         <Stack.Screen
+          name={screenNames.PROFILE_DETAIL}
+          component={ProfileDetail}
+          options={({navigation}) => ({
+            headerTitle: () => (
+              <Text style={styles.heading}>Profile</Text>
+            ),
+            headerLeft: () => <BackButton navigation={navigation} />,
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerStyle: styles.headerStyle,
+          })}
+          
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -65,4 +93,10 @@ const styles = StyleSheet.create({
   headerStyle: {
     backgroundColor: colors.PRIMARY_BG,
   },
+  icon:{
+    height:vh(30),
+    width:vw(30),
+    marginRight:20,
+    resizeMode:'contain'
+  }
 });
