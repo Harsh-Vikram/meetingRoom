@@ -1,10 +1,10 @@
 //Library imports
 import {
+  ActivityIndicator,
   Pressable,
   StyleSheet,
   Text,
   TextStyle,
-  View,
   ViewStyle,
 } from 'react-native';
 import React from 'react';
@@ -19,10 +19,11 @@ type Props = {
   containerStyle?: ViewStyle;
   titleStyle?: TextStyle;
   isDisabled?: boolean;
+  isLoading?: boolean;
 };
 
 const Button = (props: Props) => {
-  const {isDisabled = false} = props;
+  const {isDisabled = false, isLoading = false} = props;
   return (
     <Pressable
       style={[
@@ -30,8 +31,14 @@ const Button = (props: Props) => {
         props?.containerStyle,
         {opacity: isDisabled ? 0.5 : 1},
       ]}
-      onPress={isDisabled ? null : props?.onPress}>
-      <Text style={[styles.titleText, props?.titleStyle]}>{props?.title}</Text>
+      onPress={isDisabled ? null : isLoading ? null : props?.onPress}>
+      {isLoading ? (
+        <ActivityIndicator size={'small'} color={colors.WHITE} />
+      ) : (
+        <Text style={[styles.titleText, props?.titleStyle]}>
+          {props?.title}
+        </Text>
+      )}
     </Pressable>
   );
 };
@@ -43,6 +50,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingVertical: vh(16),
     paddingHorizontal: vw(24),
+    height: vh(60),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.SECONDARY_BG,
