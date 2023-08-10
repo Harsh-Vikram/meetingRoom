@@ -1,4 +1,6 @@
 export default {
-HOME: 'home screen',
-
+  LANDING_PAGE:'LandingPage',
+  HOME: 'Home',
+  ROOM_DETAIL: 'RoomDetail',
+  PROFILE_DETAIL: 'ProfileDetail',
 };
