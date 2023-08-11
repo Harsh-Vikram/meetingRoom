@@ -6,13 +6,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
 
 //Screen imports
-import Home from '../screens/Home';
-import Login from '../screens/Auth/Login';
-import Signup from '../screens/Auth/Signup';
-import FullName from '../screens/Auth/FullName';
-import LandingPage from '../screens/LandingPage/LandingPage';
-import RoomDetail from '../screens/RoomDetails/RoomDetail';
-import ProfileDetail from '../screens/ProfileDetail/ProfileDetail';
+import Home from '../modules/Home/Home';
+import Login from '../modules/Auth/Login';
+import Signup from '../modules/Auth/Signup';
+import FullName from '../modules/Auth/FullName';
+import LandingPage from '../modules/LandingPage/LandingPage';
+import RoomDetail from '../modules/RoomDetails/RoomDetail';
+import ProfileDetail from '../modules/ProfileDetail/ProfileDetail';
 
 //Component imports
 import BackButton from '../components/BackButton';
@@ -22,28 +22,32 @@ import colors from '../utils/colors';
 import {IMAGES} from '../utils/images';
 import screenNames from '../utils/screenNames';
 import {normalize, vh, vw} from '../utils/Dimension';
+import {useDispatch} from 'react-redux';
+import {saveUserData} from '../modules/Auth/authAction';
 
 const Stack = createStackNavigator();
 const Router = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
+  const dispatch = useDispatch();
+
   // Handle user state changes
-  function onAuthStateChanged(user) {
+  function onAuthStateChanged(user: any) {
+    dispatch(saveUserData(user?._user));
     setUser(user);
     if (initializing) setInitializing(false);
   }
-  console.log('user', user);
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
   if (initializing) return null;
-  // initialRouteName={user ? screenNames.HOME : screenNames.SIGNUP}
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        initialRouteName={user ? screenNames.HOME : screenNames.LANDING_PAGE}>
         <Stack.Screen
           name={screenNames.LANDING_PAGE}
           component={LandingPage}
@@ -51,7 +55,6 @@ const Router = () => {
             headerShown: false,
           }}
         />
-
         <Stack.Screen
           name={screenNames.SIGNUP}
           component={Signup}

@@ -3,15 +3,15 @@ import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 //Component imports
-import RoomCard from '../components/RoomCard';
+import RoomCard from '../../components/RoomCard';
 
 //Util imports
-import {IMAGES} from '../utils/images';
-import screenNames from '../utils/screenNames';
-import {getRooms} from '../utils/FirebaseAPICalls';
-import {RoomDetailType} from '../utils/types';
-import colors from '../utils/colors';
-import {vh, vw} from '../utils/Dimension';
+import {IMAGES} from '../../utils/images';
+import screenNames from '../../utils/screenNames';
+import {getRooms} from '../../utils/FirebaseAPICalls';
+import {RoomDetailType} from '../../utils/types';
+import colors from '../../utils/colors';
+import {vh, vw} from '../../utils/Dimension';
 
 type Props = {};
 
