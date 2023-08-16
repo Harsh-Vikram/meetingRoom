@@ -1,3 +1,6 @@
+import {HomeStateType} from '../modules/Home';
+import {SlotDataType} from '../utils/types';
+
 export class AuthState {
   user: {
     isUserLoggedIn: boolean;
@@ -12,4 +15,14 @@ export class AuthState {
     displayName: '',
     uid: '',
   };
+}
+
+export class HomeState {
+  rooms: {
+    roomNumber: number;
+    roomId: string;
+    slots: SlotDataType[];
+    displayName: string;
+    uid: string;
+  }[] = [];
 }

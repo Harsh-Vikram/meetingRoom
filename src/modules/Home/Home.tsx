@@ -1,5 +1,5 @@
 //Library imports
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
+import {FlatList, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 //Component imports
@@ -16,7 +16,7 @@ import {vh, vw} from '../../utils/Dimension';
 type Props = {};
 
 const Home = (props: Props) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState(['', '', '', '', '', '']);
   useEffect(() => {
     const readData = async () => {
       const userData = await getRooms();
@@ -28,8 +28,6 @@ const Home = (props: Props) => {
   const onPressCard = (roomDetails: RoomDetailType) => {
     props.navigation.navigate(screenNames.ROOM_DETAIL, roomDetails);
   };
-
-  console.log(data);
 
   const renderItem = ({item}: {item: RoomDetailType}) => (
     <RoomCard
@@ -43,6 +41,10 @@ const Home = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
+      <StatusBar
+        backgroundColor={colors.PRIMARY_BG}
+        barStyle={'dark-content'}
+      />
       <FlatList
         columnWrapperStyle={{justifyContent: 'space-between'}}
         data={data}
