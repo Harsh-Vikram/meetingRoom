@@ -55,8 +55,9 @@ const SlotCard = (props: Props) => {
               </Text>
             </View>
             {props?.data?.isOccupied && (
-              <Text style={styles.occupiedText}>
-                Occupied By: {props?.data?.occupiedBy?.email}{' '}
+              <Text style={styles.occupiedText} numberOfLines={1}>
+                Occupied By: {props?.data?.occupiedBy?.email}
+                {' || '}
                 {props?.data?.occupiedBy?.name}
               </Text>
             )}

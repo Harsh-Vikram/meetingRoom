@@ -48,8 +48,6 @@ export default Button;
 const styles = StyleSheet.create({
   mainContainer: {
     width: '100%',
-    paddingVertical: vh(16),
-    paddingHorizontal: vw(24),
     height: vh(60),
     justifyContent: 'center',
     alignItems: 'center',
