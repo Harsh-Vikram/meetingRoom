@@ -1,13 +1,15 @@
 import screenNames from './screenNames';
+
+export type OccupiedByType = {
+  id: string;
+  name: string;
+  email: string;
+};
 export type SlotDataType = {
   startTime: string;
   endTime: string;
   isOccupied: boolean;
-  occupiedBy?: {
-    userId: string;
-    firstName: string;
-    lastName: string;
-  };
+  occupiedBy?: OccupiedByType;
 };
 
 export type RoomDetailType = {

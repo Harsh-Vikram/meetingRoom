@@ -1,22 +1,22 @@
 //Library imports
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
+import {FlatList, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 //Component imports
-import RoomCard from '../components/RoomCard';
+import RoomCard from '../../components/RoomCard';
 
 //Util imports
-import {IMAGES} from '../utils/images';
-import screenNames from '../utils/screenNames';
-import {getRooms} from '../utils/FirebaseAPICalls';
-import {RoomDetailType} from '../utils/types';
-import colors from '../utils/colors';
-import {vh, vw} from '../utils/Dimension';
+import {IMAGES} from '../../utils/images';
+import screenNames from '../../utils/screenNames';
+import {getRooms} from '../../utils/FirebaseAPICalls';
+import {RoomDetailType} from '../../utils/types';
+import colors from '../../utils/colors';
+import {vh, vw} from '../../utils/Dimension';
 
 type Props = {};
 
 const Home = (props: Props) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState(['', '', '', '', '', '']);
   useEffect(() => {
     const readData = async () => {
       const userData = await getRooms();
@@ -28,8 +28,6 @@ const Home = (props: Props) => {
   const onPressCard = (roomDetails: RoomDetailType) => {
     props.navigation.navigate(screenNames.ROOM_DETAIL, roomDetails);
   };
-
-  console.log(data);
 
   const renderItem = ({item}: {item: RoomDetailType}) => (
     <RoomCard
@@ -43,6 +41,10 @@ const Home = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
+      <StatusBar
+        backgroundColor={colors.PRIMARY_BG}
+        barStyle={'dark-content'}
+      />
       <FlatList
         columnWrapperStyle={{justifyContent: 'space-between'}}
         data={data}

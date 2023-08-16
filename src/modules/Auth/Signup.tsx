@@ -4,8 +4,9 @@ import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 
 //Component imports
-import Button from '../../components/Button';
 import InputWithLabel from '../../components/InputWithLabel';
+import Button from '../../components/Button';
+
 //Util imports
 import {
   vh,
@@ -20,9 +21,10 @@ import screenNames from '../../utils/screenNames';
 
 type Props = {};
 
-const Login = (props: Props) => {
+const Signup = (props: Props) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleEmailChange = (txt: string) => {
@@ -32,44 +34,53 @@ const Login = (props: Props) => {
   const handlePasswordChange = (txt: string) => {
     setPassword(txt);
   };
-
+  const handleConfirmPasswordChange = (txt: string) => {
+    setConfirmPassword(txt);
+  };
+  const onPressLogin = () => {
+    props.navigation.navigate(screenNames.LOGIN);
+  };
   const onPressRegister = () => {
     setIsLoading(true);
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(res => {
-        setIsLoading(false);
-        console.log('User signed in!', res);
-        if (!res.user.displayName)
-          props.navigation.navigate(screenNames.FULL_NAME);
-        else props.navigation.navigate(screenNames.HOME);
-      })
-      .catch(error => {
-        setIsLoading(false);
-        if (error.code === 'auth/wrong-password') {
-          Alert.alert('Incorrect Password');
-        }
+    if (password === confirmPassword) {
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(res => {
+          setIsLoading(false);
+          props.navigation.reset({
+            index: 0,
+            routes: [{name: screenNames.FULL_NAME}],
+          });
+        })
+        .catch(error => {
+          setIsLoading(false);
+          Alert.alert(error.message);
+          // if (error.code === 'auth/email-already-in-use') {
+          // }
+          // if (error.code === 'auth/invalid-email') {
+          //   Alert.alert('That email address is invalid!');
+          // }
+          // if (error.code === 'auth/weak-password'){
+          //   Alert.alert('That email address is invalid!');
 
-        if (error.code === 'auth/invalid-email') {
-          Alert.alert('That email address is invalid!');
-        }
-        console.error(error);
-      });
+          // }
+          console.error(error);
+        });
+    } else {
+      setIsLoading(false);
+      Alert.alert('Passwords do not match');
+    }
   };
-
-  const onPressSignup = () => {
-    props.navigation.navigate(screenNames.SIGNUP);
-  };
-
   return (
     <View style={styles.mainContainer}>
       <StatusBar backgroundColor={colors.PRIMARY_BG} />
       <View style={styles.upperContainer}>
-        <Image source={IMAGES.LOGIN_BG} style={styles.upperImage} />
+        <Image source={IMAGES.SIGNUP_BG} style={styles.upperImage} />
       </View>
       <View style={styles.lowerContainer}>
-        <Text style={styles.headerText}>Login</Text>
-        <Text style={styles.subHeaderText}>Login to your account</Text>
+        <Text style={styles.headerText}>Register</Text>
+        <Text style={styles.subHeaderText}>Create your account</Text>
+
         <InputWithLabel
           value={email}
           onChangeText={handleEmailChange}
@@ -83,17 +94,23 @@ const Login = (props: Props) => {
           forPassword
           placeholder="Password"
         />
+        <InputWithLabel
+          value={confirmPassword}
+          onChangeText={handleConfirmPasswordChange}
+          mainContainerStyle={styles.inputStyle}
+          placeholder="Confirm Password"
+        />
         <Button
-          title="Login"
+          title="Register"
           onPress={onPressRegister}
           containerStyle={styles.btnStyles}
           isLoading={isLoading}
-          isDisabled={!(email && password)}
+          isDisabled={!(email && password && confirmPassword)}
         />
         <Text style={styles.alreadyHaveText}>
-          Don't have an account?{' '}
-          <Text onPress={onPressSignup} style={styles.loginText}>
-            Create one.
+          Already have a account?{' '}
+          <Text onPress={onPressLogin} style={styles.loginText}>
+            Login
           </Text>
         </Text>
       </View>
@@ -101,7 +118,7 @@ const Login = (props: Props) => {
   );
 };
 
-export default Login;
+export default Signup;
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -118,12 +135,11 @@ const styles = StyleSheet.create({
     color: colors.GREY,
   },
   upperContainer: {
-    flex: 0.8,
+    flex: 0.65,
     margin: vw(24),
-    paddingTop: vh(20),
   },
   upperImage: {
-    height: screenHeight / 3,
+    height: screenHeight / 3.2,
     width: screenWidth - vw(48),
     resizeMode: 'contain',
   },
@@ -140,7 +156,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   btnStyles: {
-    marginTop: vh(40),
+    marginTop: vh(20),
   },
   alreadyHaveText: {
     fontSize: normalize(12),

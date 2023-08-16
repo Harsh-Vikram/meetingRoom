@@ -12,11 +12,14 @@ type Props = {
   data: SlotDataType;
   selectedSlot: string;
   setSelectedSlot: Dispatch<SetStateAction<string>>;
+  index: number;
 };
 
 const SlotCard = (props: Props) => {
   const onSlotPress = () => {
-    props?.setSelectedSlot(`${props.data?.startTime}-${props.data?.endTime}`);
+    props?.setSelectedSlot(
+      `${props?.index}-${props.data?.startTime}-${props.data?.endTime}`,
+    );
   };
   return (
     <Pressable
@@ -45,13 +48,13 @@ const SlotCard = (props: Props) => {
         </View>
         {props?.data?.isOccupied && (
           <Text style={styles.occupiedText}>
-            Occupied By: {'props?.data?.occupiedBy?.firstName'}{' '}
-            {'props?.data?.occupiedBy?.lastName'}
+            Occupied By: {props?.data?.occupiedBy?.email}{' '}
+            {props?.data?.occupiedBy?.name}
           </Text>
         )}
       </View>
       {props?.selectedSlot ===
-        `${props.data?.startTime}-${props.data?.endTime}` && (
+        `${props?.index}-${props.data?.startTime}-${props.data?.endTime}` && (
         <Image source={IMAGES.CHECK_MARK} style={styles.checkMark} />
       )}
     </Pressable>

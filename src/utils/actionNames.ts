@@ -1,0 +1,4 @@
+export default {
+  SAVE_USER_DATA: 'SAVE USER DATA',
+  SAVE_ROOM_DATA: 'SAVE ROOM DATA',
+};
