@@ -10,7 +10,7 @@ type Props = {
 
 const ShimmerView = (props: Props) => {
   return (
-    <View style={props?.style}>
+    <View style={[props?.style, {overflow: 'hidden'}]}>
       <Shimmer>
         <Text style={styles.mainContainer} />
       </Shimmer>

@@ -25,7 +25,7 @@ const RoomCard = (props: Props) => {
       ) : (
         <Pressable
           style={[styles.container, styles.mainCard]}
-          onPress={() => props?.onPress(props.data)}>
+          onPress={() => props?.onPress(props?.data)}>
           <Text style={styles.roomNoText}>{props.roomTitle}</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Image source={props.imageName} style={styles.icon} />

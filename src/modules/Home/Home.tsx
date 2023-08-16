@@ -17,16 +17,27 @@ type Props = {};
 
 const Home = (props: Props) => {
   const [data, setData] = useState(['', '', '', '', '', '']);
+  const [refreshing, setRefreshing] = useState(false);
+
   useEffect(() => {
-    const readData = async () => {
-      const userData = await getRooms();
-      if (userData) setData(userData?.map(item => item._data));
-    };
     readData();
   }, []);
 
+  const readData = async (cb?: () => void) => {
+    const userData = await getRooms();
+    if (userData) setData(userData?.map(item => item._data));
+    cb?.();
+  };
+
   const onPressCard = (roomDetails: RoomDetailType) => {
     props.navigation.navigate(screenNames.ROOM_DETAIL, roomDetails);
+  };
+
+  const onPullToRefresh = () => {
+    setRefreshing(true);
+    readData(() => {
+      setRefreshing(false);
+    });
   };
 
   const renderItem = ({item}: {item: RoomDetailType}) => (
@@ -51,6 +62,8 @@ const Home = (props: Props) => {
         renderItem={renderItem}
         numColumns={2}
         style={styles.flatListStyle}
+        onRefresh={onPullToRefresh}
+        refreshing={refreshing}
       />
     </SafeAreaView>
   );
