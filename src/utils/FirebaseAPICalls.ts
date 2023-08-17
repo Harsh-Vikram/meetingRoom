@@ -1,5 +1,4 @@
 import firestore from '@react-native-firebase/firestore';
-import {Alert} from 'react-native';
 
 export const getRooms = async () => {
   try {
@@ -34,13 +33,13 @@ export const bookSlot = async (
     email: string;
   },
   successCallback?: () => void,
-  errorCallback?: () => void,
+  errorCallback?: (err: string) => void,
 ) => {
   try {
     const data = await firestore().collection('Rooms').doc(id).get();
     if (data) {
       if (data._data.slots[index].isOccupied) {
-        Alert.alert('Slot already booked');
+        errorCallback?.("Slot already booked")
       } else {
         let tempData = [...data._data.slots];
         tempData[index].isOccupied = true;

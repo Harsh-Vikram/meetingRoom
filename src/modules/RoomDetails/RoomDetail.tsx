@@ -1,6 +1,6 @@
 //Library imports
 import {useSelector} from 'react-redux';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {Alert, FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 //Component imports
@@ -65,11 +65,16 @@ const RoomDetail = (props: Props) => {
         });
         modalRef.current?.toggleModal();
       },
+      (err) => {
+        setIsLoading(false);
+        Alert.alert(err);
+      }
     );
   };
 
   const onPullToRefresh = () => {
     setRefreshing(true);
+    setSelectedSlot('')
     getRoomDetail(roomId).then(res => {
       setRoomDetails(res?._data);
       setRefreshing(false);
